@@ -1,38 +1,41 @@
-const tree = [
-  {
-    name: 'first',
-    children: [
-      {
-        name: 'first-first',
-      },
-      {
-        name: 'first-second',
-        children: [
-          {
-            name: 'first-second-first',
-            children: [
-              {
-                name: 'first-second-first-first'
-              }
-            ]
-          }
-        ]
-      },
-      {
-        name: 'first-third',
-        children: [
-          {
-            name: 'first-third-first'
-          }, {
-            name: 'first-third-second'
-          }, {
-            name: 'first-third-third'
-          }
-        ]
-      }
-    ]
-  }
-]
+const tree = {
+  name:'tree',
+  children:[
+    {
+      name: 'first',
+      children: [
+        {
+          name: 'first-first',
+        },
+        {
+          name: 'first-second',
+          children: [
+            {
+              name: 'first-second-first',
+              children: [
+                {
+                  name: 'first-second-first-first'
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: 'first-third',
+          children: [
+            {
+              name: 'first-third-first'
+            }, {
+              name: 'first-third-second'
+            }, {
+              name: 'first-third-third'
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
 
 const tree2 = [
   {
@@ -76,9 +79,10 @@ const tree2 = [
 
 const logTree = require('./dist/index')
 
-console.log(logTree.log(tree))
+logTree.log(tree)
 
 console.log('----------')
 
-console.log(logTree.log(tree2))
+const parseTree = logTree.parse(tree2)
+console.log(parseTree)
 

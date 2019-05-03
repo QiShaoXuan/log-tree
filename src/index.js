@@ -17,24 +17,44 @@ class logTree {
     return `${parentPre}${hasNext ? '│' : ' '}   `
   }
 
-  log(tree, level = 0, parentPre = '', treeStr = '') {
-    if (level >= this.settings.maxLevel) return ''
-    tree.forEach((child, index) => {
-      const hasNext = tree[index + 1] ? true : false
-      const children = child[this.settings.keyword.children]
+  parse(tree, level = 0, parentPre = '', treeStr = '') {
+    if (!this.check(tree, level)) return ''
 
-      treeStr += `${this.setPre(level, hasNext, parentPre)}${child[this.settings.keyword.name]}\n`
+    if (Array.isArray(tree)) {
+      tree.forEach((child, index) => {
+        const hasNext = tree[index + 1] ? true : false
+        const children = child[this.settings.keyword.children]
 
+        treeStr += `${this.setPre(level, hasNext, parentPre)}${child[this.settings.keyword.name]}\n`
+
+        if (children) {
+          treeStr += this.parse(children, level + 1, this.setTransferPre(parentPre, hasNext))
+        }
+      })
+    } else {
+      const children = tree[this.settings.keyword.children]
+      treeStr = `${tree[this.settings.keyword.name]}\n`
       if (children) {
-        treeStr += this.log(children, level + 1, this.setTransferPre(parentPre, hasNext))
+        treeStr += this.parse(children, level + 1)
       }
-    })
+    }
 
     return treeStr
   }
 
   setSettings(settings = {}) {
     this.settings = Object.assign(this.setSettings(settings))
+  }
+
+  log(tree) {
+    console.log(this.parse(tree))
+  }
+
+  check(tree, level) {
+    if (typeof tree !== 'object') return false
+    if (level >= this.settings.maxLevel) return false
+
+    return true
   }
 }
 

@@ -4,6 +4,20 @@
   (global = global || self, global.library = factory());
 }(this, function () { 'use strict';
 
+  function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -55,23 +69,34 @@
         return "".concat(parentPre).concat(hasNext ? '│' : ' ', "   ");
       }
     }, {
-      key: "log",
-      value: function log(tree) {
+      key: "parse",
+      value: function parse(tree) {
         var _this = this;
 
         var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
         var parentPre = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
         var treeStr = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-        if (level >= this.settings.maxLevel) return '';
-        tree.forEach(function (child, index) {
-          var hasNext = tree[index + 1] ? true : false;
-          var children = child[_this.settings.keyword.children];
-          treeStr += "".concat(_this.setPre(level, hasNext, parentPre)).concat(child[_this.settings.keyword.name], "\n");
+        if (!this.check(tree, level)) return '';
+
+        if (Array.isArray(tree)) {
+          tree.forEach(function (child, index) {
+            var hasNext = tree[index + 1] ? true : false;
+            var children = child[_this.settings.keyword.children];
+            treeStr += "".concat(_this.setPre(level, hasNext, parentPre)).concat(child[_this.settings.keyword.name], "\n");
+
+            if (children) {
+              treeStr += _this.parse(children, level + 1, _this.setTransferPre(parentPre, hasNext));
+            }
+          });
+        } else {
+          var children = tree[this.settings.keyword.children];
+          treeStr = "".concat(tree[this.settings.keyword.name], "\n");
 
           if (children) {
-            treeStr += _this.log(children, level + 1, _this.setTransferPre(parentPre, hasNext));
+            treeStr += this.parse(children, level + 1);
           }
-        });
+        }
+
         return treeStr;
       }
     }, {
@@ -79,6 +104,18 @@
       value: function setSettings() {
         var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
         this.settings = Object.assign(this.setSettings(settings));
+      }
+    }, {
+      key: "log",
+      value: function log(tree) {
+        console.log(this.parse(tree));
+      }
+    }, {
+      key: "check",
+      value: function check(tree, level) {
+        if (_typeof(tree) !== 'object') return false;
+        if (level >= this.settings.maxLevel) return false;
+        return true;
       }
     }]);
 

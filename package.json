@@ -1,8 +1,8 @@
 {
   "name": "console-log-tree",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "Log the tree of array or object",
-  "main": "gulpfile.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "gulp build",
     "watch": "gulp watch"

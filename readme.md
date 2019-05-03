@@ -1,4 +1,4 @@
-# log-tree
+# console-log-tree
 
 Log the tree of an array or object
 
@@ -63,5 +63,23 @@ Log the tree of an array or object
 ```
 
 ## Use
+
+```bash
+npm install console-log-tree
+```
+
+```js
+const logTree = require('console-log-tree')
+
+const tree = {...}
+
+const treeStr = logTree.parse(tree)
+
+console.log(treeStr)
+
+// OR
+
+logTree.log(tree)
+```
 
 
