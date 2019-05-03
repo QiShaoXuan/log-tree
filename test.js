@@ -77,6 +77,7 @@ const tree2 = [
 const logTree = require('./dist/index')
 
 console.log(logTree.log(tree))
+
 console.log('----------')
 
 console.log(logTree.log(tree2))

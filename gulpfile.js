@@ -22,13 +22,3 @@ gulp.task('default', async function () {
 gulp.task('watch', () => {
   gulp.watch('./src/*.js', gulp.series('default'));
 })
-
-gulp.task('test', () => {
-  gulp.src('./test.js')
-    .pipe(function (a, b, c) {
-    console.log(a, b, c)
-
-  })
-})
-
-

@@ -1,5 +1,7 @@
 # log-tree
 
+Log the tree of an array or object
+
 ## Example
 
 #### Input
