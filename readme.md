@@ -2,6 +2,27 @@
 
 Log the tree of an array or object
 
+## Useage
+
+```bash
+npm install console-log-tree
+```
+
+```js
+const logTree = require('console-log-tree')
+
+const tree = {...}
+
+const treeStr = logTree.parse(tree)
+
+console.log(treeStr)
+
+// OR
+
+logTree.log(tree)
+```
+
+
 ## Example
 
 #### Input
@@ -60,26 +81,6 @@ Log the tree of an array or object
 │           ├── ski.png
 │           └── snowboard.jpg
 └── doc
-```
-
-## Use
-
-```bash
-npm install console-log-tree
-```
-
-```js
-const logTree = require('console-log-tree')
-
-const tree = {...}
-
-const treeStr = logTree.parse(tree)
-
-console.log(treeStr)
-
-// OR
-
-logTree.log(tree)
 ```
 
 
